@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mood Music & Video Recommender</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Mood-Based Music and Video Recommender</h1>
+
+    <!-- Mood Detection Section -->
+    <section id="mood-detection">
+      <h2>Facial Expression Mood Detection</h2>
+      <button id="facial-mood-btn">Detect Mood</button>
+      <p id="facial-mood-result">Detected mood: <span></span></p>
+    </section>
+
+    <!-- Text-Based Mood Detection Section -->
+    <section id="text-mood">
+      <h2>Text-Based Mood Detection</h2>
+      <textarea id="mood-text" rows="4" placeholder="Enter your mood description..."></textarea>
+      <button id="text-mood-btn">Analyze Mood</button>
+      <p id="text-mood-result">Detected mood: <span></span></p>
+    </section>
+
+    <!-- Music Recommendation Section -->
+    <section id="music-recommendations">
+      <h2>Spotify Music Recommendations</h2>
+      <button id="get-songs-btn">Get Songs</button>
+      <ul id="songs-list"></ul>
+    </section>
+
+    <!-- Video Recommendation Section -->
+    <section id="video-recommendations">
+      <h2>YouTube Video Recommendations</h2>
+      <button id="get-videos-btn">Get Videos</button>
+      <ul id="videos-list"></ul>
+    </section>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
