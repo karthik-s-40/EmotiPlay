@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EmotiPlay - Mood-Based Recommender</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <div class="emoji-background"></div> <!-- Animated emoji background -->
+  <div class="logo-container">
+    <h1 class="logo-text">EmotiPlay</h1>
+</div>
+
+
+</div>
+  <div class="container">
+    <h1>Welcome to EmotiPlay</h1>
+    
+    <!-- Facial Recognition Button -->
+    <section id="mood-detection">
+      <h2>Sit in a well lit area to analyze</h2>
+      <button id="facial-mood-btn">Detect Mood with Facial Recognition</button>
+    </section>
+
+    <!-- Mood Confirmation Section (hidden by default) -->
+    <section id="confirm-mood-section" style="display:none;">
+      <p>We detected your mood as: <span id="detected-mood"></span></p>
+      <button id="confirm-mood-btn">Yes, this is correct</button>
+      <button id="reject-mood-btn">No, this is wrong</button>
+    </section>
+
+    <!-- Manual Mood Input Section (hidden by default) -->
+    <section id="manual-mood-section" style="display:none;">
+      <h2>Enter your mood manually</h2>
+      <input type="text" id="manual-mood-input" placeholder="Enter your mood...">
+      <button id="submit-manual-mood-btn">Submit Mood</button>
+    </section>
+
+    <!-- Choose between Songs or Videos (hidden by default) -->
+    <section id="choice-section" style="display:none;">
+      <h2>What would you like to explore?</h2>
+      <button id="choose-songs-btn">Spotify Songs</button>
+      <button id="choose-videos-btn">YouTube Videos</button>
+    </section>
+
+    <!-- Song and Video Results (hidden by default) -->
+    <section id="results-section" style="display:none;">
+      <h2>Recommendations:</h2>
+      <ul id="results-list"></ul>
+      <div id="pagination-songs" style="display: none;">
+          <button id="next-songs-btn">Load More Songs</button>
+      </div>
+      <div id="pagination-videos" style="display: none;">
+          <button id="next-videos-btn">Load More Videos</button>
+      </div>
+    </section>
+  </div>
+  
+  <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
