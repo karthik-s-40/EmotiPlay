@@ -3,9 +3,14 @@ from spotipy.oauth2 import SpotifyOAuth
 from transformers import pipeline
 from deepface import DeepFace
 import cv2
+import requests
 
 # Initialize sentiment analysis
 sentiment_analyzer = pipeline('sentiment-analysis', model='distilbert-base-uncased-finetuned-sst-2-english')
+
+# Replace with your actual YouTube API key
+YOUTUBE_API_KEY = 'AIzaSyD8xIZDQ7qCAmmeb88GUWMQZfTNLakK98U'  # Update with your actual YouTube API key
+YOUTUBE_SEARCH_URL = 'https://www.googleapis.com/youtube/v3/search'
 
 # Analyze mood based on text input
 def analyze_mood(user_input):
@@ -31,7 +36,7 @@ def analyze_mood(user_input):
         'emotional': ['emotional', 'sentimental', 'heartfelt', 'touching'],
         'upbeat': ['upbeat', 'happy', 'positive', 'optimistic', 'cheerful', 'fun', 'sunny'],
         'nostalgic': ['nostalgia', 'nostalgic', 'yesteryear', 'vintage', 'retro', 'reflective'],
-        'motivational': ['motivational', 'inspirational', 'empowering', 'encouraging','motivationn'],
+        'motivational': ['motivational', 'inspirational', 'empowering', 'encouraging', 'motivation'],
         'calm': ['calm', 'peaceful', 'serene', 'tranquil', 'meditative'],
         'danger': ['danger', 'dark', 'ominous', 'tense', 'suspenseful'],
         'futuristic': ['futuristic', 'tech', 'industrial', 'digital', 'glitchy'],
@@ -49,10 +54,12 @@ def analyze_mood(user_input):
         'gujarati': ['gujarati', 'garba', 'gujarati folk'],
         'odia': ['odia', 'odia folk', 'odia songs'],
         'assamese': ['assamese', 'bihu', 'assamese folk'],
+        'comedy': ['comedy', 'funny', 'humor', 'joke', 'laugh', 'hilarious'],
+        'drama': ['drama', 'tragic', 'emotional', 'intense', 'theatrical'],
+        'devotional': ['devotional', 'spiritual', 'worship', 'prayer', 'mantra', 'sacred'],
     }
 
     user_input_lower = user_input.lower()
-
     detected_moods = set()
 
     # Detect multiple moods based on keywords
@@ -71,8 +78,6 @@ def analyze_mood(user_input):
         return "sad"
     else:
         return "neutral"
-
-
 
 # Facial emotion recognition function
 def detect_facial_expression():
@@ -134,6 +139,31 @@ def get_songs_based_on_mood(mood, offset=0, limit=20):
         songs.append(f"{track['name']} by {track['artists'][0]['name']} (URL: {track['external_urls']['spotify']})")
     return songs
 
+# Function to get YouTube videos based on mood with pagination
+def get_youtube_videos(mood, max_results=5, page_token=None):
+    params = {
+        'part': 'snippet',
+        'q': mood,
+        'type': 'video',
+        'maxResults': max_results,
+        'key': YOUTUBE_API_KEY,
+    }
+    if page_token:
+        params['pageToken'] = page_token
+
+    response = requests.get(YOUTUBE_SEARCH_URL, params=params)
+    videos = response.json().get('items', [])
+    next_page_token = response.json().get('nextPageToken', None)
+
+    video_list = []
+    for video in videos:
+        video_title = video['snippet']['title']
+        video_id = video['id']['videoId']
+        video_url = f"https://www.youtube.com/watch?v={video_id}"
+        video_list.append(f"{video_title} (URL: {video_url})")
+    
+    return video_list, next_page_token
+
 if __name__ == "__main__":
     print("Using facial expression to detect mood...")
     detected_emotion = detect_facial_expression()
@@ -153,48 +183,56 @@ if __name__ == "__main__":
     mood = mood_map.get(detected_emotion, 'neutral')  # Default to neutral if not found
     print(f"Mapped mood: {mood}")
 
-    if mood == 'neutral':
-        print("Detected mood is neutral. Please provide input.")
-        user_input = input("How are you feeling today? ")
+    # Confirm mood
+    confirm_mood = input("Is the detected mood correct? (yes/no): ").strip().lower()
+    if confirm_mood == 'no':
+        user_input = input("Please enter your mood description: ")
         mood = analyze_mood(user_input)
+        print(f"Confirmed mood: {mood}")
 
-    print(f"Final detected mood: {mood}")
+    # Choose between songs and videos
+    choice = input("Do you want to see songs, videos, or both? (songs/videos/both): ").strip().lower()
+    
+    if choice in ['songs', 'both']:
+        song_offset = 0
+        song_limit = 20
 
-    # Fetch and display the first set of songs (page 1)
-    offset = 0
-    limit = 20
-    while True:
-        songs = get_songs_based_on_mood(mood, offset=offset, limit=limit)
-        if not songs:
-            print("No more songs found.")
-            break
-        
-        # Display songs for the current page
-        print(f"\nHere are some songs for your mood (Page {offset // limit + 1}):")
-        for song in songs:
-            print(song)
+        while True:
+            songs = get_songs_based_on_mood(mood, offset=song_offset, limit=song_limit)
+            print("\nRecommended Songs:")
+            for song in songs:
+                print(song)
 
-        # Ask if the user wants to manually enter the mood after showing the first set of songs
-        if offset == 0:  # Only ask after the first page
-            manual_input = input("\nDid I get it right? (yes/no): ").lower()
-            if manual_input == 'no':
-                mood = input("Please enter your mood: ").lower()
+            # Check if more songs are available
+            if len(songs) < song_limit:
+                print("\nNo more songs available.")
+                break
 
-                # Fetch and display songs based on the manually entered mood
-                offset = 0  # Reset offset to show new mood songs
-                songs = get_songs_based_on_mood(mood, offset=offset, limit=limit)
-                if not songs:
-                    print("No songs found for the entered mood.")
-                    break
-                
-                print(f"\nHere are some songs for your manually entered mood ({mood}):")
-                for song in songs:
-                    print(song)
+            # Ask for pagination input
+            next_action = input("\nDo you want to see the next page of songs? (yes/no): ").strip().lower()
+            if next_action == 'yes':
+                song_offset += song_limit
+            else:
+                break
 
-        # Ask if user wants to see the next set of songs
-        next_action = input("\nDo you want to see the next set of songs? (yes/no): ").lower()
-        if next_action != 'yes':
-            break
+    if choice in ['videos', 'both']:
+        youtube_next_page_token = None
+        youtube_max_results = 5
 
-        # Increase offset for the next set of songs (next page)
-        offset += limit
+        while True:
+            youtube_videos, youtube_next_page_token = get_youtube_videos(mood, max_results=youtube_max_results, page_token=youtube_next_page_token)
+            print("\nRecommended YouTube Videos:")
+            for video in youtube_videos:
+                print(video)
+
+            # Check if more videos are available
+            if not youtube_next_page_token:
+                print("\nNo more videos available.")
+                break
+
+            # Ask for pagination input
+            next_action = input("\nDo you want to see the next page of YouTube videos? (yes/no): ").strip().lower()
+            if next_action == 'yes':
+                continue  # Next page will automatically load due to the loop
+            else:
+                break
