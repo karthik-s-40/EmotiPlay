@@ -233,3 +233,4 @@ function createEmoji() {
 
 // Create a fixed number of emojis at intervals
 setInterval(createEmoji, 1000);
+
