@@ -1,2 +1,0 @@
-pip install spotipy transformers deepface opencv-python
-pip install Flask spotipy transformers deepface opencv-python requests
