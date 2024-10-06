@@ -1,0 +1,11 @@
+# YouTube API Credentials
+YOUTUBE_API_KEY = 'AIzaSyD8xIZDQ7qCAmmeb88GUWMQZfTNLakK98U'
+YOUTUBE_SEARCH_URL = 'https://www.googleapis.com/youtube/v3/search'
+
+# Spotify API Credentials
+sp = spotipy.Spotify(auth_manager=SpotifyOAuth(
+    client_id='961ca27d80624c26a92f1661add6802a',
+    client_secret='903a5b11cdab448fa59aec251f8c4a8a',
+    redirect_uri='http://localhost:8888/callback',
+    scope='user-library-read playlist-modify-public'
+))

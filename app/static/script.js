@@ -27,7 +27,11 @@ document.getElementById('reject-mood-btn').addEventListener('click', () => {
 });
 
 // Submit manual mood
-document.getElementById('submit-manual-mood-btn').addEventListener('click', submitManualMood);
+document.getElementById('manual-mood-btn').addEventListener('click', () => {
+    console.log("Manual mood button clicked");
+    document.getElementById('mood-detection').style.display = 'none';
+    document.getElementById('manual-mood-section').style.display = 'block';
+});
 
 // Key listener for manual mood input
 document.getElementById('manual-mood-input').addEventListener('keydown', (event) => {
@@ -36,15 +40,18 @@ document.getElementById('manual-mood-input').addEventListener('keydown', (event)
     }
 });
 
-// Function to submit manual mood
+document.getElementById('submit-manual-mood-btn').addEventListener('click', submitManualMood);
+
 function submitManualMood() {
     const manualMood = document.getElementById('manual-mood-input').value;
     if (manualMood) {
+        console.log('Manual Mood Entered:', manualMood);
         document.getElementById('manual-mood-section').style.display = 'none';
         document.getElementById('detected-mood').textContent = manualMood;
         document.getElementById('choice-section').style.display = 'block';
     }
 }
+
 
 // Handle song choice
 document.getElementById('choose-songs-btn').addEventListener('click', () => {
