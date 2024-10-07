@@ -12,7 +12,7 @@ click
 colorama
 cryptography
 deepface
-dotenv
+python-dotenv
 flatbuffers
 frozenlist
 gast
