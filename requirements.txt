@@ -1,7 +1,6 @@
 absl-py
 aiohttp
 astunparse
-async-timeout
 attrs
 blinker
 Brotli
@@ -12,6 +11,7 @@ charset-normalizer
 click
 colorama
 cryptography
+deepface
 flatbuffers
 frozenlist
 gast
@@ -53,3 +53,7 @@ typing_extensions
 urllib3
 Werkzeug
 wrapt
+Flask
+spotipy
+transformers
+opencv-python
