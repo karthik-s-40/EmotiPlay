@@ -19,6 +19,7 @@ google-auth
 google-auth-oauthlib
 google-pasta
 grpcio
+gunicorn
 h5py
 idna
 keras
