@@ -19,9 +19,9 @@ google-auth==2.3.0
 google-auth-oauthlib==0.4.6
 google-pasta==0.2.0
 grpcio==1.41.0
-h5py==3.6.0
+h5py
 idna==3.3
-keras>=2.13.1,<2.14
+keras
 keras-preprocessing==1.1.2
 Markdown==3.3.4
 MarkupSafe==2.0.1
@@ -33,7 +33,7 @@ numpy
 oauthlib==3.1.1
 opt-einsum==3.3.0
 packaging==21.2
-protobuf==3.19.6
+protobuf
 pyasn1==0.4.8
 pyasn1-modules==0.2.8
 pycparser==2.20
