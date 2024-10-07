@@ -12,6 +12,7 @@ click
 colorama
 cryptography
 deepface
+dotenv
 flatbuffers
 frozenlist
 gast
