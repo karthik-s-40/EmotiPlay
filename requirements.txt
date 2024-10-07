@@ -21,7 +21,7 @@ google-pasta==0.2.0
 grpcio==1.41.0
 h5py==3.6.0
 idna==3.3
-keras==2.10.0
+keras>=2.13.1,<2.14
 keras-preprocessing==1.1.2
 Markdown==3.3.4
 MarkupSafe==2.0.1
