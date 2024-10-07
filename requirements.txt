@@ -49,6 +49,7 @@ tensorboard
 tensorflow
 tensorflow-estimator
 termcolor
+tf-keras
 typing_extensions
 urllib3
 Werkzeug
