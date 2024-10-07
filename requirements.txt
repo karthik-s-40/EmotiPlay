@@ -29,7 +29,7 @@ mkl-service>=2.4.0,<3.0.0
 mkl-fft
 mkl-random==1.2.4
 multidict==5.1.0
-numpy
+numpy<=1.24.3
 oauthlib==3.1.1
 opt-einsum==3.3.0
 packaging==21.2
