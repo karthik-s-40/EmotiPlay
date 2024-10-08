@@ -47,7 +47,7 @@ rsa
 scipy
 six
 tensorboard
-tensorflow
+tensorflow-cpu
 tensorflow-estimator
 termcolor
 tf-keras
