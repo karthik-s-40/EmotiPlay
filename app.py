@@ -66,7 +66,7 @@ mood_keywords = {
         'cinematic': ['cinematic', 'dramatic', 'epic'],
         'emotional': ['emotional', 'sentimental', 'heartfelt', 'touching'],
         'upbeat': ['upbeat', 'happy', 'positive', 'optimistic', 'cheerful', 'fun', 'sunny'],
-        'nostalgic': ['nostalgia', 'nostalgic', 'yesteryear', 'vintage', 'retro', 'reflective'],
+        '90s': ['nostalgia', 'nostalgic', 'yesteryear', 'vintage', 'retro', 'reflective'],
         'motivational': ['motivational', 'inspirational', 'empowering', 'encouraging', 'motivation'],
         'calm': ['calm', 'peaceful', 'serene', 'tranquil', 'meditative'],
         'danger': ['danger', 'dark', 'ominous', 'tense', 'suspenseful'],
@@ -88,7 +88,9 @@ mood_keywords = {
         'comedy': ['comedy', 'funny', 'humor', 'joke', 'laugh', 'hilarious'],
         'drama': ['drama', 'tragic', 'emotional', 'intense', 'theatrical'],
         'devotional': ['devotional', 'spiritual', 'worship', 'prayer', 'mantra', 'sacred'],
-        'lofi':['lofi','lo-fi']
+        'lofi':['lofi','lo-fi'],
+        'evergreen':['90s','80s','evergreen'],
+        'Melody':['melody','melodious'],
     # Add other mood keywords...
 }
 
